@@ -229,7 +229,7 @@ const Weather = () => {
         {/* 7-Day Forecast */}
         <div className="mb-6">
           <h2 className="text-xl font-bold text-green-800 mb-4 px-2">7-Day Forecast</h2>
-          <div className="flex space-x-4 overflow-x-auto pb-2 px-2 scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+          <div className="flex space-x-4 overflow-x-auto pb-2 px-2" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
             {forecast.map((day, index) => {
               // Determine gradient based on weather condition
               const getWeatherGradient = (icon: string, description: string) => {

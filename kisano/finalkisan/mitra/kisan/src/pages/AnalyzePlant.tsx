@@ -36,7 +36,7 @@ const AnalyzePlant = () => {
     let stageIndex = 0;
     
     const interval = setInterval(() => {
-      progress += Math.random() * 8 + 2; // 2-10% increments
+      progress += Math.random() * 3 + 1; // 1-4% increments for smoother animation
       
       if (progress >= analysisStages[stageIndex]?.progress) {
         setCurrentStage(stageIndex + 1);
@@ -59,9 +59,9 @@ const AnalyzePlant = () => {
           };
           localStorage.setItem('diagnosis_results', JSON.stringify(results));
           navigate('/diagnose/results');
-        }, 1000);
+        }, 500);
       }
-    }, 200);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [navigate]);
@@ -139,10 +139,13 @@ const AnalyzePlant = () => {
               Our advanced AI is examining your plant for any health issues
             </p>
             
-            {/* Progress Bar */}
+            {/* Enhanced Progress Bar */}
             <div className="space-y-4">
-              <Progress value={analysisProgress} className="w-full h-3" />
-              <div className="text-2xl font-bold text-agri-primary">
+              <div className="relative">
+                <Progress value={analysisProgress} className="w-full h-4" />
+                <div className="absolute inset-0 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 opacity-20 rounded-full animate-pulse" />
+              </div>
+              <div className="text-3xl font-bold text-green-600 animate-bounce">
                 {Math.round(analysisProgress)}%
               </div>
             </div>

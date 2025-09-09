@@ -53,8 +53,16 @@ const DiagnoseResults = () => {
         startDate: new Date().toISOString(),
         status: 'active',
         progress: 0,
-        nextAction: 'Apply recommended fertilizer',
-        image: plantImage
+        nextAction: 'Remove affected parts and apply copper fungicide',
+        image: plantImage,
+        severity: results.severity,
+        confidence: results.confidence,
+        steps: [
+          { step: 1, title: 'Remove Affected Parts', completed: false, dueDate: new Date().toISOString() },
+          { step: 2, title: 'Apply Copper Fungicide', completed: false, dueDate: new Date(Date.now() + 24*60*60*1000).toISOString() },
+          { step: 3, title: 'Improve Air Circulation', completed: false, dueDate: new Date(Date.now() + 2*24*60*60*1000).toISOString() },
+          { step: 4, title: 'Monitor Progress', completed: false, dueDate: new Date(Date.now() + 7*24*60*60*1000).toISOString() }
+        ]
       };
       
       const existingTreatments = JSON.parse(localStorage.getItem('active_treatments') || '[]');
@@ -62,9 +70,14 @@ const DiagnoseResults = () => {
       localStorage.setItem('active_treatments', JSON.stringify(existingTreatments));
       
       toast({
-        title: "Treatment Added",
-        description: "Added to your active treatments for monitoring."
+        title: "✅ Treatment Saved!",
+        description: "Added to your active treatments with step-by-step guidance."
       });
+      
+      // Navigate to treatments after a brief delay
+      setTimeout(() => {
+        navigate('/treatments');
+      }, 1500);
     }
   };
 
@@ -135,14 +148,19 @@ const DiagnoseResults = () => {
 
         {/* Plant Image */}
         {plantImage && (
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
             <img 
               src={plantImage} 
               alt="Diagnosed plant" 
               className="w-full aspect-[4/3] object-cover"
             />
-            <div className="absolute top-4 right-4 bg-agri-success rounded-full p-2">
-              <Leaf className="w-5 h-5 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+            <div className="absolute top-4 right-4 bg-green-500 rounded-full p-3 shadow-lg">
+              <Leaf className="w-6 h-6 text-white" />
+            </div>
+            <div className="absolute bottom-4 left-4 text-white">
+              <div className="text-sm font-medium opacity-90">Analyzed Image</div>
+              <div className="text-xs opacity-70">{new Date().toLocaleDateString()}</div>
             </div>
           </div>
         )}
@@ -202,22 +220,80 @@ const DiagnoseResults = () => {
           <Progress value={92} className="w-full h-2 mt-4" />
         </div>
 
+        {/* Treatment Steps */}
+        <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-3xl p-6 border border-green-200">
+          <div className="flex items-center space-x-3 mb-6">
+            <div className="bg-green-500 rounded-full p-3">
+              <Target className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-900 text-lg">Treatment Steps</h3>
+              <p className="text-sm text-gray-600">Follow these steps for best results</p>
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex items-start space-x-4 p-4 bg-white rounded-2xl shadow-sm">
+              <div className="bg-green-500 text-white rounded-full p-2 text-sm font-bold flex-shrink-0">1</div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-1">Remove Affected Parts</h4>
+                <p className="text-sm text-gray-600">Carefully remove all affected leaves and stems. Dispose away from healthy plants.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-4 p-4 bg-white rounded-2xl shadow-sm">
+              <div className="bg-blue-500 text-white rounded-full p-2 text-sm font-bold flex-shrink-0">2</div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-1">Apply Copper Fungicide</h4>
+                <p className="text-sm text-gray-600">Spray in early morning or evening. Repeat every 7-10 days for 3 applications.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-4 p-4 bg-white rounded-2xl shadow-sm">
+              <div className="bg-purple-500 text-white rounded-full p-2 text-sm font-bold flex-shrink-0">3</div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-1">Improve Air Circulation</h4>
+                <p className="text-sm text-gray-600">Space plants properly and avoid overhead watering to prevent reinfection.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-4 p-4 bg-white rounded-2xl shadow-sm">
+              <div className="bg-orange-500 text-white rounded-full p-2 text-sm font-bold flex-shrink-0">4</div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-1">Monitor Progress</h4>
+                <p className="text-sm text-gray-600">Check daily for new symptoms. Recovery should begin within 5-7 days.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         {/* Add to Active Treatments */}
-        <div className="bg-agri-light rounded-2xl p-6 border border-agri-primary/20">
+        <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-3xl p-6 text-white shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="font-bold text-agri-accent mb-1">Track Treatment Progress</h3>
-              <p className="text-sm text-agri-gray">Monitor recovery and get reminders</p>
+              <h3 className="font-bold text-white text-lg mb-2">Save Treatment Plan</h3>
+              <p className="text-green-100 text-sm">Track progress with daily reminders and monitoring</p>
             </div>
-            <Calendar className="w-8 h-8 text-agri-primary" />
+            <Calendar className="w-10 h-10 text-green-200" />
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+            <div className="bg-white/20 rounded-2xl p-3">
+              <div className="font-semibold mb-1">Duration</div>
+              <div className="text-green-100">14-21 days</div>
+            </div>
+            <div className="bg-white/20 rounded-2xl p-3">
+              <div className="font-semibold mb-1">Success Rate</div>
+              <div className="text-green-100">92% recovery</div>
+            </div>
           </div>
           
           <Button 
             onClick={addToActiveTreatments}
-            className="w-full bg-agri-primary hover:bg-agri-secondary"
+            className="w-full bg-white text-green-600 hover:bg-green-50 font-semibold py-3 rounded-2xl transition-all duration-300 transform hover:scale-105"
           >
-            <Plus className="w-4 h-4 mr-2" />
-            Add to Active Treatments
+            <Plus className="w-5 h-5 mr-2" />
+            Save to My Treatments
           </Button>
         </div>
 
