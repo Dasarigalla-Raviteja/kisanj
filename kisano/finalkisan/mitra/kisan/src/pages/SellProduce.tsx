@@ -25,8 +25,14 @@ const SellProduce = () => {
   const [showCreateListingDialog, setShowCreateListingDialog] = useState(false);
   const [selectedCrop, setSelectedCrop] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [pricePerKg, setPricePerKg] = useState('');
   const [needTransport, setNeedTransport] = useState(false);
+  
+  // Auto-calculated price based on quantity and market price
+  const calculateTotalPrice = () => {
+    if (!selectedCrop || !quantity) return 0;
+    const marketPrice = marketPrices.find(p => p.name === selectedCrop)?.avgPrice || 0;
+    return parseFloat(quantity) * marketPrice;
+  };
 
   // Sample data
   const activeListings = [
@@ -107,24 +113,24 @@ const SellProduce = () => {
   const totalEarnings = soldListings.reduce((sum, listing) => sum + listing.soldPrice, 0);
 
   const handleCreateListing = () => {
+    const marketPrice = marketPrices.find(p => p.name === selectedCrop)?.avgPrice || 0;
     // Handle form submission logic here
     console.log('Creating listing:', {
       crop: selectedCrop,
       quantity,
-      pricePerKg,
+      pricePerKg: marketPrice,
+      totalPrice: calculateTotalPrice(),
       needTransport
     });
     setShowCreateListingDialog(false);
     // Reset form
     setSelectedCrop('');
     setQuantity('');
-    setPricePerKg('');
     setNeedTransport(false);
   };
 
   const prefillFromMarketPrice = (crop: any) => {
     setSelectedCrop(crop.name);
-    setPricePerKg(crop.avgPrice.toString());
     setShowCreateListingDialog(true);
   };
 
@@ -175,10 +181,20 @@ const SellProduce = () => {
             </button>
           </div>
 
-          {/* Total Earnings - Mobile Optimized */}
-          <div className="text-right bg-green-50 px-3 py-2 rounded-xl border border-green-200">
-            <p className="text-xs text-green-600 font-medium">Earned</p>
-            <p className="text-lg font-bold text-green-700">₹{totalEarnings.toLocaleString()}</p>
+          {/* Counts and Earnings Display */}
+          <div className="flex space-x-3">
+            <div className="text-center bg-blue-50 px-3 py-2 rounded-xl border border-blue-200">
+              <p className="text-xs text-blue-600 font-medium">Active</p>
+              <p className="text-lg font-bold text-blue-700">{activeListings.length}</p>
+            </div>
+            <div className="text-center bg-orange-50 px-3 py-2 rounded-xl border border-orange-200">
+              <p className="text-xs text-orange-600 font-medium">Sold</p>
+              <p className="text-lg font-bold text-orange-700">{soldListings.length}</p>
+            </div>
+            <div className="text-center bg-green-50 px-3 py-2 rounded-xl border border-green-200">
+              <p className="text-xs text-green-600 font-medium">Earned</p>
+              <p className="text-lg font-bold text-green-700">₹{totalEarnings.toLocaleString()}</p>
+            </div>
           </div>
         </div>
 
@@ -313,21 +329,34 @@ const SellProduce = () => {
               />
             </div>
 
-            {/* Price per kg */}
+            {/* Price Display (Auto-calculated) */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Price per kg (₹)</label>
-              <Input
-                type="number"
-                placeholder="Enter price"
-                value={pricePerKg}
-                onChange={(e) => setPricePerKg(e.target.value)}
-                className="w-full h-12 text-base"
-              />
-              {selectedCrop && (
-                <p className="text-xs text-gray-500 mt-1">
-                  Market average: ₹{marketPrices.find(p => p.name === selectedCrop)?.avgPrice}/kg
-                </p>
-              )}
+              <label className="block text-sm font-bold text-gray-700 mb-2">Price Information</label>
+              <div className="bg-gray-50 rounded-xl p-4 border">
+                {selectedCrop && (
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Market price:</span>
+                      <span className="text-sm font-medium">₹{marketPrices.find(p => p.name === selectedCrop)?.avgPrice}/kg</span>
+                    </div>
+                    {quantity && (
+                      <>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Quantity:</span>
+                          <span className="text-sm font-medium">{quantity} kg</span>
+                        </div>
+                        <div className="flex justify-between border-t pt-2">
+                          <span className="text-sm font-bold text-gray-900">Total Price:</span>
+                          <span className="text-lg font-bold text-green-600">₹{calculateTotalPrice().toLocaleString()}</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+                {!selectedCrop && (
+                  <p className="text-sm text-gray-500 text-center">Select a crop to see price calculation</p>
+                )}
+              </div>
             </div>
 
             {/* Transport Toggle */}
@@ -348,7 +377,7 @@ const SellProduce = () => {
             {/* Submit Button */}
             <Button
               onClick={handleCreateListing}
-              disabled={!selectedCrop || !quantity || !pricePerKg}
+              disabled={!selectedCrop || !quantity}
               className="w-full py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-2xl h-12 mt-4"
             >
               Create Listing
