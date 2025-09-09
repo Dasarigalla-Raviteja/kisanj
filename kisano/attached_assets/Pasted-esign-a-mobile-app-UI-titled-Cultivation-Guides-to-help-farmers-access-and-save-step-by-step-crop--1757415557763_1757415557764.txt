@@ -1,0 +1,81 @@
+esign a mobile app UI titled “Cultivation Guides” to help farmers access and save step-by-step crop guides. Focus on three crops: Tomato, Wheat, and Maize—each with essential cultivation steps informed by research.
+
+Main Cultivation Guides Page:
+
+Show three crop cards (Tomato, Wheat, Maize).
+
+Each card displays:
+
+Crop image + name
+
+3–4 icons or brief text for key stages (e.g., Seed → Nursery → Irrigation → Harvest)
+
+Short bulleted summary:
+
+Tomato: Variety selection + seed treatment; spacing & nursery; basal/top fertilization; drip irrigation; staking & maintenance.
+
+Wheat: Seed treatment; sowing method & seed rate; six-stage irrigation; fertilizer schedule; weed control.
+
+Maize: Land prep & raised beds; seed rate & treatment; spacing & trio fertilizer schedule.
+
+“Read Full Guide” button to open detailed view
+
+Bookmark (Save) icon to add to Saved Cultivation Guides
+
+At the top: a search bar (“Search crops or guides...”) and category tabs (All, Planting, Irrigation, Harvesting)
+
+Detailed Crop Guide Page:
+
+Header with crop name and image
+
+Step-by-step segmented sections (scrollable cards or accordions):
+
+Variety & Seed Treatment
+
+Land Preparation & Sowing
+
+Fertilization & Nutrient Management
+
+Irrigation Schedule
+
+Support/Weed/Disease Control
+
+Each section has:
+
+Clear title
+
+2–3 bullet points with simple language
+
+Optional small illustration/icon for each step
+
+“Save This Guide” toggle/button at top (if not already saved), or “Saved” state
+
+Saved Cultivation Guides Section (inside Advisory):
+
+Accessible under Advisory tab
+
+Shows only saved guides (max five for now)
+
+Display vertical list of cards:
+
+Crop image + name
+
+One-liner summary (“Tomato: drip irrigation best practices”)
+
+Remove (unbookmark) icon
+
+Include filters or sorting: by crop type, by growth stage, by date saved
+
+Visual Style & UX Considerations:
+
+Use soft green and earthy tones, with clean white backgrounds
+
+Cards with rounded corners and subtle elevation
+
+Icons visually representing stages (e.g., seed icon, watering can, fertilizer bag)
+
+Readable text (large font, simple bullets) for ease of reading by farmers
+
+Friendly interaction: tap to save, smooth transitions to detail pages
+
+Consistent navigation: back button, bookmarking clear, search quick
