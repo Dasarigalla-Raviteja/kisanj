@@ -35,6 +35,7 @@ import Weather from "./pages/Weather";
 import FertilizerGuide from "./pages/FertilizerGuide";
 import Advisory from "./pages/Advisory";
 import MarketPrices from "./pages/MarketPrices";
+import MarketDetails from "./pages/MarketDetails";
 import MyFertilizerGuidance from "./pages/MyFertilizerGuidance";
 import CropGuideDetail from "./pages/CropGuideDetail";
 import MySavedCultivationGuides from "./pages/MySavedCultivationGuides";
@@ -111,6 +112,7 @@ const App = () => {
           <Route path="/fertilizer-guide" element={<FertilizerGuide />} />
           <Route path="/advisory" element={<Advisory />} />
           <Route path="/market-prices" element={<MarketPrices />} />
+          <Route path="/market-details/:marketId" element={<MarketDetails />} />
           <Route path="/my-fertilizer-guidance" element={<MyFertilizerGuidance />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
