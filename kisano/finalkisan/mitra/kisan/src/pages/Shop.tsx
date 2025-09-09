@@ -233,24 +233,6 @@ const Shop = () => {
           ))}
         </div>
 
-        {/* Promo Banner */}
-        <div className="relative bg-gradient-to-r from-green-600 to-green-700 rounded-3xl p-6 text-white overflow-hidden">
-          <div className="relative z-10">
-            <div className="flex items-center space-x-2 mb-2">
-              <Truck className="w-5 h-5" />
-              <span className="text-sm font-semibold uppercase tracking-wide">Free Delivery</span>
-            </div>
-            <h2 className="text-2xl font-bold mb-2">Orders above ₹500</h2>
-            <p className="text-green-100 text-sm leading-relaxed">
-              Get premium agricultural products delivered free to your doorstep.
-            </p>
-          </div>
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-white opacity-10 rounded-full" />
-          <div className="absolute -right-16 -bottom-4 w-24 h-24 bg-white opacity-5 rounded-full" />
-          <div className="absolute right-4 top-4 w-12 h-12 bg-white opacity-10 rounded-full flex items-center justify-center">
-            <Sparkles className="w-6 h-6" />
-          </div>
-        </div>
 
         {/* Products Section */}
         <div className="space-y-4">
