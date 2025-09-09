@@ -229,7 +229,7 @@ const Weather = () => {
         {/* 7-Day Forecast */}
         <div className="mb-6">
           <h2 className="text-xl font-bold text-green-800 mb-4 px-2">7-Day Forecast</h2>
-          <div className="flex space-x-4 overflow-x-auto pb-2 px-2" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+          <div className="flex space-x-3 overflow-x-scroll pb-4 px-2 -mx-2" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
             {forecast.map((day, index) => {
               // Determine gradient based on weather condition
               const getWeatherGradient = (icon: string, description: string) => {
@@ -262,8 +262,8 @@ const Weather = () => {
               return (
                 <div
                   key={day.date}
-                  className={`flex-shrink-0 w-28 bg-gradient-to-br ${getWeatherGradient(day.icon, day.description)} rounded-3xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm`}
-                  style={{ minWidth: '112px' }}
+                  className={`flex-shrink-0 w-32 bg-gradient-to-br ${getWeatherGradient(day.icon, day.description)} rounded-3xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
+                  style={{ minWidth: '128px' }}
                 >
                   <div className={`text-center ${getTextColor(day.icon, day.description)}`}>
                     {/* Day */}

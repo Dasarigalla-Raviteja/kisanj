@@ -47,8 +47,11 @@ const PlantDiagnosis = () => {
 
   const startDiagnosis = () => {
     if (selectedImage) {
-      // Navigate to diagnosis results
       console.log('Starting diagnosis...');
+      // Store the selected image for analysis
+      localStorage.setItem('plant_image', selectedImage);
+      // Navigate to analysis page
+      navigate('/diagnose/analyze');
     }
   };
 
