@@ -185,16 +185,18 @@ const MarketPrices = () => {
                       <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
                         {market.distance}
                       </span>
+                      <span>•</span>
+                      <Bell className="w-4 h-4 text-gray-400" />
                     </div>
                   </div>
                 </div>
               </div>
             </CardHeader>
 
-            {/* Crops List */}
+            {/* Crops List - Top 5 */}
             <CardContent className="p-0">
               <div className="space-y-0">
-                {market.crops.map((crop, index) => (
+                {market.crops.slice(0, 5).map((crop, index) => (
                   <div key={index} className="flex items-center justify-between p-5 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-900 text-base">{crop.name}</h4>
@@ -211,6 +213,17 @@ const MarketPrices = () => {
                     </div>
                   </div>
                 ))}
+                {/* More Info Button */}
+                <div className="p-4 border-t border-gray-200 bg-gray-50">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => navigate(`/market-details/${market.id}`)}
+                  >
+                    More Info
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -228,18 +241,6 @@ const MarketPrices = () => {
         )}
       </div>
 
-      {/* Floating Action Button - Price Alerts */}
-      <div className="fixed bottom-6 right-6 z-10">
-        <Button
-          onClick={() => {
-            // TODO: Implement price alerts functionality
-            alert('Price alerts feature coming soon!');
-          }}
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl transition-all duration-200"
-        >
-          <Bell className="w-6 h-6 text-white" />
-        </Button>
-      </div>
 
       {/* Pull to refresh hint (for mobile) */}
       <div className="pb-20"> {/* Extra padding for mobile navigation */}
