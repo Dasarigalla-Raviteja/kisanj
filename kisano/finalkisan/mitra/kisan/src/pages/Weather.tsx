@@ -229,7 +229,7 @@ const Weather = () => {
         {/* 7-Day Forecast */}
         <div className="mb-6">
           <h2 className="text-xl font-bold text-green-800 mb-4 px-2">7-Day Forecast</h2>
-          <div className="flex space-x-4 overflow-x-auto pb-2 px-2 scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+          <div className="space-y-3">
             {forecast.map((day, index) => {
               // Determine gradient based on weather condition
               const getWeatherGradient = (icon: string, description: string) => {
@@ -262,42 +262,48 @@ const Weather = () => {
               return (
                 <div
                   key={day.date}
-                  className={`flex-shrink-0 w-28 bg-gradient-to-br ${getWeatherGradient(day.icon, day.description)} rounded-3xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm`}
-                  style={{ minWidth: '112px' }}
+                  className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300"
                 >
-                  <div className={`text-center ${getTextColor(day.icon, day.description)}`}>
-                    {/* Day */}
-                    <div className="font-bold text-sm mb-2 opacity-90">
-                      {index === 0 ? 'Today' : day.dayName.slice(0, 3)}
-                    </div>
-                    
-                    {/* Weather Icon */}
-                    <div className="mb-3 flex justify-center">
-                      <img
-                        src={weatherService.getWeatherIconUrl(day.icon)}
-                        alt={day.description}
-                        className="w-12 h-12 drop-shadow-lg"
-                      />
-                    </div>
-                    
-                    {/* Temperature */}
-                    <div className="mb-2">
-                      <div className="text-lg font-bold">
-                        {day.temperature.max}°
+                  <div className="flex items-center justify-between">
+                    {/* Day and Icon */}
+                    <div className="flex items-center space-x-4">
+                      <div className="text-center">
+                        <div className="font-bold text-sm text-gray-900 mb-1">
+                          {index === 0 ? 'Today' : day.dayName.slice(0, 3)}
+                        </div>
+                        <div className="text-xs text-gray-500 capitalize">
+                          {day.description.split(' ').slice(0, 2).join(' ')}
+                        </div>
                       </div>
-                      <div className="text-sm opacity-80">
-                        {day.temperature.min}°
+                      
+                      {/* Weather Icon */}
+                      <div className="flex-shrink-0">
+                        <img
+                          src={weatherService.getWeatherIconUrl(day.icon)}
+                          alt={day.description}
+                          className="w-12 h-12"
+                        />
                       </div>
                     </div>
                     
-                    {/* Humidity */}
-                    <div className="text-xs opacity-75 font-medium">
-                      💧 {day.humidity}%
-                    </div>
-                    
-                    {/* Weather Description */}
-                    <div className="text-xs opacity-70 capitalize mt-1 leading-tight">
-                      {day.description.split(' ').slice(0, 2).join(' ')}
+                    {/* Temperature and Details */}
+                    <div className="flex items-center space-x-6">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-gray-900">
+                          {day.temperature.max}°
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {day.temperature.min}°
+                        </div>
+                      </div>
+                      
+                      {/* Humidity */}
+                      <div className="text-center">
+                        <div className="text-xs text-gray-500 mb-1">Humidity</div>
+                        <div className="text-sm font-medium text-blue-600">
+                          {day.humidity}%
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
