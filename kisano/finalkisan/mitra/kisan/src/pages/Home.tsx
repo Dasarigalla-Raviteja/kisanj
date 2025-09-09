@@ -200,7 +200,25 @@ const Home = () => {
         {/* Weather Card - Compact & Improved */}
         <Card className="weather-card border-0 shadow-sm rounded-2xl bg-gradient-to-r from-blue-50 to-sky-50">
           <CardContent className="p-4">
-            <div className="flex items-center justify-between">
+            {/* Header with location */}
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center space-x-2">
+                <MapPin className="w-4 h-4 text-blue-600" />
+                <span className="text-sm font-semibold text-blue-800">
+                  {weatherLoading ? 'Loading...' : weather?.location || 'Location unavailable'}
+                </span>
+              </div>
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="bg-white/70 border-blue-200 hover:bg-white text-blue-700 text-sm h-8 px-3 rounded-xl"
+                onClick={() => navigate('/weather')}
+              >
+                More
+              </Button>
+            </div>
+
+            <div className="flex items-center justify-between mb-3">
               {/* Weather Info */}
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-white/80 rounded-xl flex items-center justify-center shadow-sm">
@@ -224,24 +242,15 @@ const Home = () => {
                 </div>
               </div>
               
-              {/* Quick Stats and Action */}
-              <div className="flex items-center space-x-4">
-                <div className="text-center">
-                  <div className="text-xs text-blue-600 mb-1">Humidity</div>
-                  <div className="text-sm font-semibold text-blue-800">
-                    {weatherLoading ? '--%' : weather ? `${weather.humidity}%` : '--%'}
-                  </div>
+              {/* Quick Stats */}
+              <div className="text-center">
+                <div className="text-xs text-blue-600 mb-1">Humidity</div>
+                <div className="text-sm font-semibold text-blue-800">
+                  {weatherLoading ? '--%' : weather ? `${weather.humidity}%` : '--%'}
                 </div>
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="bg-white/70 border-blue-200 hover:bg-white text-blue-700 text-sm h-8 px-3 rounded-xl"
-                  onClick={() => navigate('/weather')}
-                >
-                  View Details
-                </Button>
               </div>
             </div>
+
           </CardContent>
         </Card>
 
