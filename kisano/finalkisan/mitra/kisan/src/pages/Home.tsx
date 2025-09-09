@@ -197,85 +197,51 @@ const Home = () => {
 
       {/* Content */}
       <div className="px-6 space-y-8 pt-6 pb-24">
-        {/* Weather Card - Compact */}
-        <Card className="weather-card border-0 shadow-medium rounded-3xl">
-          <CardContent className="p-6">
-            {/* Header with location and more info */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center space-x-3">
-                <MapPin className="w-5 h-5 text-blue-600" />
-                <span className="text-base font-semibold text-blue-800">
-                  {weatherLoading ? 'Loading...' : weather?.location || 'Location unavailable'}
-                </span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
-                  className="text-blue-700 hover:bg-blue-50 p-2 h-10 w-10 rounded-full"
-                  onClick={() => {/* Voice function */}}
-                >
-                  <Volume2 className="w-5 h-5" />
-                </Button>
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="bg-white/70 border-blue-200 hover:bg-white text-blue-700 text-base h-10 px-4 rounded-2xl"
-                  onClick={() => navigate('/weather')}
-                >
-                  More
-                </Button>
-              </div>
-            </div>
-
-            {/* Compact weather display */}
+        {/* Weather Card - Compact & Improved */}
+        <Card className="weather-card border-0 shadow-sm rounded-2xl bg-gradient-to-r from-blue-50 to-sky-50">
+          <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-white/60 rounded-2xl flex items-center justify-center">
+              {/* Weather Info */}
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 bg-white/80 rounded-xl flex items-center justify-center shadow-sm">
                   {weather && !weatherLoading ? (
                     <img 
                       src={weatherService.getWeatherIconUrl(weather.icon)} 
                       alt={weather.description}
-                      className="w-10 h-10"
+                      className="w-8 h-8"
                     />
                   ) : (
-                    <Cloud className="w-8 h-8 text-blue-600" />
+                    <Cloud className="w-6 h-6 text-blue-600" />
                   )}
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-blue-900">
+                  <div className="text-xl font-bold text-blue-900">
                     {weatherLoading ? '--°C' : weather ? `${weather.temperature}°C` : '--°C'}
                   </div>
-                  <div className="text-base text-blue-700 capitalize">
+                  <div className="text-sm text-blue-600 capitalize">
                     {weatherLoading ? 'Loading...' : weather?.description || 'No data'}
                   </div>
                 </div>
               </div>
-              <div className="text-right space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Thermometer className="w-4 h-4 text-yellow-600" />
-                  <span className="text-base text-blue-700">
-                    {weatherLoading ? '--°/--°' : weather ? `${weather.feelsLike}°` : '--°'}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Droplets className="w-4 h-4 text-blue-600" />
-                  <span className="text-base text-blue-700">
+              
+              {/* Quick Stats and Action */}
+              <div className="flex items-center space-x-4">
+                <div className="text-center">
+                  <div className="text-xs text-blue-600 mb-1">Humidity</div>
+                  <div className="text-sm font-semibold text-blue-800">
                     {weatherLoading ? '--%' : weather ? `${weather.humidity}%` : '--%'}
-                  </span>
+                  </div>
                 </div>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="bg-white/70 border-blue-200 hover:bg-white text-blue-700 text-sm h-8 px-3 rounded-xl"
+                  onClick={() => navigate('/weather')}
+                >
+                  View Details
+                </Button>
               </div>
             </div>
-
-            {/* Dynamic farming advice */}
-            {weather && !weatherLoading && (
-              <div className="bg-green-100 border border-green-200 rounded-2xl p-4 mt-4 flex items-center space-x-3">
-                <Leaf className="w-5 h-5 text-green-600 flex-shrink-0" />
-                <span className="text-base font-medium text-green-800">
-                  {weatherService.generateFarmingAdvice(weather)}
-                </span>
-              </div>
-            )}
           </CardContent>
         </Card>
 
